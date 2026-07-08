@@ -1,6 +1,6 @@
 import SongCard from "./SongCard"
 
-const SongList = ({ songs, loading, error, onPlay, currentSong, toggleFavorite, isFavorite }) => {
+const SongList = ({ songs, loading, error, onPlay, currentSong, toggleFavorite, isFavorite, activeMood }) => {
 
     if (loading) {
         return <div className="text-zinc-400">Loading...</div>
@@ -12,22 +12,30 @@ const SongList = ({ songs, loading, error, onPlay, currentSong, toggleFavorite, 
 
     return (
         <div className="mt-4 space-y-2">
-            {songs.map((song, i) => (
-                <SongCard
-                    key={song.trackId}
-                    trackId={song.trackId}
-                    index={i + 1}
-                    title={song.trackName}
-                    artist={song.artistName}
-                    album={song.collectionName}
-                    artwork={song.artworkUrl100}
-                    duration={song.trackTimeMillis}
-                    isPlaying={currentSong?.trackId === song.trackId}
-                    onPlay={() => onPlay(song)}
-                    toggleFavorite={toggleFavorite}
-                    isFavorite={isFavorite}
-                />
-            ))}
+            {songs.map((item) => {
+
+                const song = {
+                    id: item.trackId,
+                    title: item.trackName,
+                    artist: item.artistName,
+                    album: item.collectionName,
+                    artwork: item.artworkUrl100,
+                    duration: item.trackTimeMillis,
+                    previewUrl: item.previewUrl,
+                    mood: activeMood.id,
+                }
+
+                return (
+                    <SongCard
+                        key={song.id}
+                        song={song}
+                        isPlaying={currentSong?.id === song.id}
+                        onPlay={() => onPlay(song)}
+                        toggleFavorite={toggleFavorite}
+                        isFavorite={isFavorite}
+                    />
+                )
+            })}
         </div>
     )
 }

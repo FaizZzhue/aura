@@ -2,7 +2,10 @@ import { MOODS } from "../constants/moodConfig"
 import MoodSelector from "../container/Discover/MoodSelector"
 import SongCard from "../container/Discover/SongCard"
 
-const MyMoodPage = ({activeMood, onMoodSelect, favorites, toggleFavorite, isFavorite}) => {
+const MyMoodPage = ({activeMood, onMoodSelect, favorites, currentSong, onPlay, toggleFavorite, isFavorite}) => {
+    const filteredFavorites = favorites.filter(
+        song => song.mood === activeMood.id
+    )
 
     return (
         <div className="flex-1 px-8 py-8">
@@ -22,7 +25,7 @@ const MyMoodPage = ({activeMood, onMoodSelect, favorites, toggleFavorite, isFavo
                 onSelect={onMoodSelect}
             />
 
-            {favorites.length === 0 ? (
+            {filteredFavorites.length === 0 ? (
                 <div className="mt-12 flex flex-col items-center justify-center text-center py-16">
                     <span className="text-4xl mb-4">
                         🎵
@@ -39,15 +42,12 @@ const MyMoodPage = ({activeMood, onMoodSelect, favorites, toggleFavorite, isFavo
                 </div>
             ) : (
                 <div className="mt-8 flex flex-col gap-3">
-                    {favorites.map((song) => (
+                    {filteredFavorites.map((song) => (
                         <SongCard
                             key={song.id}
-                            trackId={song.id}
-                            title={song.title}
-                            artist={song.artist}
-                            album={song.album}
-                            artwork={song.artwork}
-                            duration={song.duration}
+                            song={song}
+                            onPlay={() => onPlay(song)}
+                            isPlaying={currentSong?.id === song.id}
                             toggleFavorite={toggleFavorite}
                             isFavorite={isFavorite}
                         />

@@ -59,6 +59,8 @@ const AppContent = () => {
                                 activeMood={activeMood}
                                 onMoodSelect={setActiveMood}
                                 favorites={favorites}
+                                currentSong={currentSong}
+                                onPlay={setCurrentSong}
                                 toggleFavorite={toggleFavorite}
                                 isFavorite={isFavorite}
                             />

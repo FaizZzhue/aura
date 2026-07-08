@@ -1,10 +1,10 @@
 import { FaPlay, FaPause, FaHeart } from "react-icons/fa"
 import { useSongCard } from "../../hooks/useSongCard"
 
-const SongCard = ({ title, artist, album, artwork, duration, isPlaying, onPlay, trackId, toggleFavorite, isFavorite }) => {
-    const song = {id:trackId, title, artist, album, artwork, duration}
+const SongCard = ({song, isPlaying, onPlay, toggleFavorite, isFavorite}) => {
+    const {id, title, artist, album, artwork, duration} = song
     const {isHover, setIsHover, formatDuration} = useSongCard(song)
-    const liked = isFavorite ? isFavorite(trackId) : false
+    const liked = isFavorite(id)
 
     return (
         <div 

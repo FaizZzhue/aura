@@ -53,6 +53,7 @@ const DiscoverPage = ({activeMood, onMoodSelect, currentSong, onPlay, toggleFavo
                         onPlay={onPlay}
                         toggleFavorite={toggleFavorite}
                         isFavorite={isFavorite}
+                        activeMood={activeMood}
                     />
                 </div>
             </div>
