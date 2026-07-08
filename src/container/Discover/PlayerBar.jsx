@@ -4,7 +4,7 @@ import { formatTime } from "../../utils/formatTime"
 
 const PlayerBar = ({ currentSong, onClose, toggleFavorite, isFavorite }) => {
     const liked = currentSong
-        ? isFavorite(currentSong.trackId)
+        ? isFavorite(currentSong.Id)
         : false
 
     const {
@@ -31,18 +31,18 @@ const PlayerBar = ({ currentSong, onClose, toggleFavorite, isFavorite }) => {
                     <div className="relative z-10 flex items-center justify-between px-4 py-3 lg:grid lg:grid-cols-[280px_1fr_260px] lg:gap-6 lg:px-6 lg:py-5">
                         <div className="flex items-center gap-3 min-w-0 lg:gap-4">
                             <img
-                                src={currentSong.artworkUrl100?.replace("100x100", "140x140")}
-                                alt={currentSong.trackName}
+                                src={currentSong.artwork?.replace("100x100", "140x140")}
+                                alt={currentSong.title}
                                 className="w-12 h-12 lg:w-16 lg:h-16 rounded-lg lg:rounded-xl object-cover"
                             />
 
                             <div className="min-w-0">
                                 <p className="text-sm lg:text-base font-bold text-white truncate">
-                                    {currentSong.trackName}
+                                    {currentSong.title}
                                 </p>
 
                                 <p className="text-xs lg:text-sm text-zinc-400 truncate">
-                                    {currentSong.artistName}
+                                    {currentSong.artist}
                                 </p>
                             </div>
                         </div>

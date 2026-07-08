@@ -5,6 +5,7 @@ import PlayerBar from "./container/Discover/PlayerBar"
 import DiscoverPage from "./pages/DiscoverPage"
 import MyMoodPage from "./pages/MyMoodPage"
 import HomePage from "./pages/HomePage"
+import ExplorePage from "./pages/ExplorePage"
 import NotFound from "./pages/NotFound"
 import { DEFAULT_MOOD } from "./constants/moodConfig"
 import useFavorite from "./hooks/useFavorite"
@@ -65,6 +66,11 @@ const AppContent = () => {
                                 isFavorite={isFavorite}
                             />
                         }
+                    />
+
+                    <Route
+                        path="/explore"
+                        element={<ExplorePage />}
                     />
 
                     <Route
