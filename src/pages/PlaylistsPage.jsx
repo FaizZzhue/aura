@@ -4,7 +4,10 @@
 
 const PlaylistPage = () => {
     return (
-        <></>
+        <div>
+            <div>
+            </div>
+        </div>
     )
 }
 
