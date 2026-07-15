@@ -1,7 +1,6 @@
 import {FaPlay,FaPause,FaHeart,FaPlus} from "react-icons/fa"
 import {useSongCard} from "../../hooks/useSongCard"
 import {useState} from "react"
-
 import usePlaylist from "../../hooks/usePlaylist"
 
 const SongCard = ({song, isPlaying, onPlay, toggleFavorite, isFavorite})=>{
@@ -24,11 +23,16 @@ const SongCard = ({song, isPlaying, onPlay, toggleFavorite, isFavorite})=>{
                 setIsHover(false)
                 setShowPlaylist(false)
             }}
-            className={`relative flex items-center gap-3 px-3 py-2 lg:gap-5 lg:px-5 lg:py-4 rounded-xl lg:rounded-2xl border border-white/10 lg:bg-gradient-to-r lg:from-[#0f172a]/40 lg:to-transparent backdrop-blur-md transition-all duration-300 group cursor-pointer
+            className={`relative isolate flex items-center gap-3 rounded-xl border border-white/10 px-3 py-2 backdrop-blur-md transition-all duration-300 group cursor-pointer lg:gap-5 lg:rounded-2xl lg:bg-gradient-to-r lg:from-[#0f172a]/40 lg:px-5 lg:py-4
+                ${
+                    showPlaylist
+                        ?"z-50"
+                        :"z-0"
+                }
                 ${
                     isPlaying
-                    ?"border-[#00d4aa]/40 shadow-[0_0_20px_rgba(0,212,170,0.15)]"
-                    :"hover:border-[#00d4aa]/30"
+                        ?"border-[#00d4aa]/40 shadow-[0_0_20px_rgba(0,212,170,.15)]"
+                        :"hover:border-[#00d4aa]/30"
                 }`}
         >
 
@@ -91,7 +95,7 @@ const SongCard = ({song, isPlaying, onPlay, toggleFavorite, isFavorite})=>{
                 {showPlaylist && (
                     <div
                         onClick={(e)=>e.stopPropagation()}
-                        className="absolute right-0 top-10 z-50 w-56 rounded-xl border border-white/10 bg-[#0f172a] p-2 shadow-xl"
+                        className="absolute right-0 top-full z-50 mt-3 w-64 overflow-hidden rounded-2xl border border-white/10 bg-[#111827] p-2 shadow-2xl"
                     >
 
                         {playlists.length === 0
@@ -104,7 +108,7 @@ const SongCard = ({song, isPlaying, onPlay, toggleFavorite, isFavorite})=>{
                                     <button
                                         key={playlist.id}
                                         onClick={()=>handleAddToPlaylist(playlist.id)}
-                                        className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm text-white transition hover:bg-white/5"
+                                        className="flex w-full items-center justify-between rounded-xl px-3 py-3 text-left transition hover:bg-white/5"
                                     >
                                         <span className="truncate">
                                             {playlist.name}
