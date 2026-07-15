@@ -12,35 +12,35 @@ const PlaylistHeader = ({playlist, onBack}) => {
                 Back
             </button>
 
-            <div className="flex flex-col gap-8 rounded-3xl border border-white/10 bg-gradient-to-r from-[#0f172a]/70 to-[#111827]/40 p-8 backdrop-blur-md lg:flex-row lg:items-center">
-                <div className="flex h-44 w-44 shrink-0 items-center justify-center rounded-3xl bg-gradient-to-br from-[#00d4aa]/30 via-[#00d4aa]/10 to-transparent">
-                    {playlist.cover 
+            <div className="flex flex-col gap-8 lg:flex-row lg:items-center">
+                <div className="flex h-40 w-40 shrink-0 items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-[#00d4aa]/30 via-[#00d4aa]/10 to-transparent">
+                    {playlist.cover
                         ?(
                             <img
                                 src={playlist.cover.replace("150x150","400x400")}
                                 alt={playlist.name}
-                                className="h-full w-full rounded-3xl object-cover"
+                                className="h-full w-full object-cover"
                             />
                         ):(
                             <Music2
-                                size={72}
+                                size={64}
                                 className="text-white/70"
                             />
                         )
                     }
                 </div>
 
-                <div className="min-w-0 flex-1">
+                <div className="flex-1">
                     <p className="text-sm uppercase tracking-[0.35em] text-zinc-500">
                         Playlist
                     </p>
 
-                    <h1 className="mt-3 truncate text-4xl font-bold text-white lg:text-6xl">
+                    <h1 className="mt-3 break-words text-5xl font-bold text-white lg:text-6xl">
                         {playlist.name}
                     </h1>
 
-                    {playlist.description && (
-                        <p className="mt-4 max-w-2xl text-zinc-400">
+                    {playlist.description&&(
+                        <p className="mt-4 max-w-3xl text-zinc-400">
                             {playlist.description}
                         </p>
                     )}
