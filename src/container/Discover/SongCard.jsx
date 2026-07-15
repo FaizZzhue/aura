@@ -7,7 +7,7 @@ const SongCard = ({song, isPlaying, onPlay, toggleFavorite, isFavorite})=>{
 
     const{id,title,artist,album,artwork,duration} = song
     const{isHover, setIsHover, formatDuration} = useSongCard(song)
-    const liked=isFavorite(id)
+    const liked = isFavorite?.(id) ?? false
     const {playlists,addSongToPlaylist} = usePlaylist()
     const [showPlaylist,setShowPlaylist] = useState(false)
     const handleAddToPlaylist = (playlistId) => {
@@ -81,7 +81,7 @@ const SongCard = ({song, isPlaying, onPlay, toggleFavorite, isFavorite})=>{
                 <button
                     onClick={(e) => {
                         e.stopPropagation()
-                        toggleFavorite(song)
+                        toggleFavorite?.(song)
                     }}
                     className={`opacity-0 group-hover:opacity-100 transition text-lg ${
                         liked
