@@ -138,6 +138,7 @@ const AppContent = () => {
                         onClose={()=>setCurrentSong(null)}
                         toggleFavorite={toggleFavorite}
                         isFavorite={isFavorite}
+                        sidebarOpen={sidebarOpen}
                     />
 
                     <AudioHistoryProvider

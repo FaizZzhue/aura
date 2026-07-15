@@ -2,7 +2,7 @@ import { FaPlay, FaPause, FaStepBackward, FaStepForward, FaRandom, FaRedo, FaVol
 import { useAudioPlayer } from "../../hooks/useAudioPlayer"
 import { formatTime } from "../../utils/formatTime"
 
-const PlayerBar = ({ currentSong, onClose, toggleFavorite, isFavorite }) => {
+const PlayerBar = ({ currentSong, onClose, toggleFavorite, isFavorite, sidebarOpen }) => {
     const liked = currentSong
         ? isFavorite(currentSong.Id)
         : false
@@ -26,7 +26,13 @@ const PlayerBar = ({ currentSong, onClose, toggleFavorite, isFavorite }) => {
                 onEnded={() => setIsPlaying(false)}
             />
 
-            <div className="fixed bottom-[90px] left-0 right-0 px-4 md:px-0 md:left-[255px] md:right-[15px] md:bottom-4 z-40">
+            <div
+                className={`fixed bottom-[90px] left-0 right-0 z-40 px-4 transition-all duration-300 md:bottom-4 md:px-0 md:right-4 ${
+                    sidebarOpen
+                        ? "md:left-[255px]"
+                        : "md:left-[95px]"
+                }`}
+            >
                 <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-[#10131f]/85 backdrop-blur-2xl shadow-[0_20px_80px_rgba(0,0,0,0.45)]">
                     <div className="relative z-10 flex items-center justify-between px-4 py-3 lg:grid lg:grid-cols-[280px_1fr_260px] lg:gap-6 lg:px-6 lg:py-5">
                         <div className="flex items-center gap-3 min-w-0 lg:gap-4">
