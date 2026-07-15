@@ -10,7 +10,6 @@ const DiscoverPage = ({activeMood, onMoodSelect, currentSong, onPlay, toggleFavo
         <div className="flex-1 px-6 py-6 pb-24 md:pb-6">
             <div className="relative rounded-3xl border border-white/10 bg-gradient-to-br from-[#0f172a]/80 via-[#020617]/80 to-black p-8 backdrop-blur-xl">
                 <div className="absolute top-[-120px] right-[-120px] w-[320px] h-[320px] bg-[#00d4aa] opacity-20 blur-[120px] rounded-full" />
-                <div className="absolute inset-0 bg-white/5 backdrop-blur-2xl pointer-events-none" />
                 <div className="relative z-10">
                     <div className="mb-8">
                         <h2 className="font-display text-3xl font-bold text-white">
