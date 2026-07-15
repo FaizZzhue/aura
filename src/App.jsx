@@ -9,6 +9,8 @@ import ExplorePage from "./pages/ExplorePage"
 import NotFound from "./pages/NotFound"
 import { DEFAULT_MOOD } from "./constants/moodConfig"
 import useFavorite from "./hooks/useFavorite"
+import PlaylistDetailPage from "./pages/PlaylistDetailPage"
+import PlaylistsPage from "./pages/PlaylistsPage"
 
 const AppContent = () => {
     const [activeMood, setActiveMood] = useState(DEFAULT_MOOD)
@@ -66,6 +68,16 @@ const AppContent = () => {
                                 isFavorite={isFavorite}
                             />
                         }
+                    />
+
+                    <Route
+                        path="/playlists"
+                        element={<PlaylistsPage />}
+                    />
+
+                    <Route
+                        path="/playlists/:id"
+                        element={<PlaylistDetailPage />}
                     />
 
                     <Route
