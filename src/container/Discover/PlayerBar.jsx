@@ -6,10 +6,7 @@ const PlayerBar = ({ currentSong, onClose, toggleFavorite, isFavorite, sidebarOp
     const liked = currentSong
         ? isFavorite(currentSong.Id)
         : false
-
-    const {
-        audioRef, isPlaying, currentTime, duration, volume, progress, setVolume, setCurrentTime, setDuration, setIsPlaying, togglePlay, handleSeek
-    } = useAudioPlayer(currentSong)
+    const {audioRef, isPlaying, currentTime, duration, volume, progress, setVolume, setCurrentTime, setDuration, setIsPlaying, togglePlay, handleSeek} = useAudioPlayer(currentSong)
 
     if (!currentSong) return null
 
@@ -17,12 +14,8 @@ const PlayerBar = ({ currentSong, onClose, toggleFavorite, isFavorite, sidebarOp
         <>
             <audio
                 ref={audioRef}
-                onTimeUpdate={() =>
-                    setCurrentTime(audioRef.current.currentTime)
-                }
-                onLoadedMetadata={() =>
-                    setDuration(audioRef.current.duration)
-                }
+                onTimeUpdate={() => setCurrentTime(audioRef.current.currentTime)}
+                onLoadedMetadata={() => setDuration(audioRef.current.duration)}
                 onEnded={() => setIsPlaying(false)}
             />
 
@@ -56,8 +49,7 @@ const PlayerBar = ({ currentSong, onClose, toggleFavorite, isFavorite, sidebarOp
                         <div className="flex items-center gap-4 lg:hidden">
 
                             <button
-                                onClick={() =>
-                                    toggleFavorite({
+                                onClick={() => toggleFavorite({
                                         id: currentSong.trackId,
                                         title: currentSong.trackName,
                                         artist: currentSong.artistName,
@@ -108,9 +100,7 @@ const PlayerBar = ({ currentSong, onClose, toggleFavorite, isFavorite, sidebarOp
                         </div>
 
                         <div className="hidden lg:flex flex-col items-center gap-4">
-
                             <div className="flex items-center gap-8 text-zinc-300">
-
                                 <button>
                                     <FaRandom />
                                 </button>
@@ -136,17 +126,14 @@ const PlayerBar = ({ currentSong, onClose, toggleFavorite, isFavorite, sidebarOp
                                 <button>
                                     <FaRedo />
                                 </button>
-
                             </div>
 
                             <div className="flex items-center gap-4 w-full max-w-[560px]">
-
                                 <span className="text-xs text-zinc-400 w-10 text-right">
                                     {formatTime(currentTime)}
                                 </span>
 
                                 <div className="relative flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
-
                                     <div
                                         className="absolute left-0 top-0 h-full bg-[#6ee7c8]"
                                         style={{ width: `${progress}%` }}
@@ -165,12 +152,10 @@ const PlayerBar = ({ currentSong, onClose, toggleFavorite, isFavorite, sidebarOp
                                 <span className="text-xs text-zinc-400 w-10">
                                     {formatTime(duration)}
                                 </span>
-
                             </div>
                         </div>
 
                         <div className="hidden lg:flex items-center justify-end gap-4">
-
                             <FaVolumeUp className="text-zinc-300" />
 
                             <input
@@ -191,9 +176,7 @@ const PlayerBar = ({ currentSong, onClose, toggleFavorite, isFavorite, sidebarOp
                             >
                                 ×
                             </button>
-
                         </div>
-
                     </div>
                 </div>
             </div>
