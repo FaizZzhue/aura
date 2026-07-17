@@ -21,7 +21,7 @@ const AppContent = () => {
     const [sidebarOpen, setSidebarOpen] = useState(true)
     const {favorites, toggleFavorite, isFavorite} = useFavorite()
     const location = useLocation()
-    const isAppPage = location.pathname !=="/"
+    const isAppPage = location.pathname !== "/"
     const handleSidebarToggle = () => {setSidebarOpen((prev) => !prev)}
 
     return(
@@ -34,8 +34,7 @@ const AppContent = () => {
             )}
 
             <main
-                className={`
-                    min-h-screen flex flex-col transition-all duration-300
+                className={`min-h-screen flex flex-col transition-all duration-300
                     ${
                         isAppPage
                             ?sidebarOpen
@@ -44,7 +43,7 @@ const AppContent = () => {
                             :"ml-0"
                     }
                     ${
-                        currentSong&&isAppPage
+                        currentSong && isAppPage
                             ?"pb-32 max-md:pb-56"
                             :""
                     }
@@ -131,7 +130,7 @@ const AppContent = () => {
                 </Routes>
             </main>
 
-            {isAppPage&&(
+            {isAppPage && (
                 <>
                     <PlayerBar
                         currentSong={currentSong}
@@ -151,7 +150,7 @@ const AppContent = () => {
 
 }
 
-const App =()=>{
+const App = () => {
     return(
         <BrowserRouter>
             <AppContent/>
