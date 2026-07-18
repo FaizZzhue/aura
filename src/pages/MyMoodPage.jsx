@@ -1,10 +1,13 @@
 import { MOODS } from "../constants/moodConfig"
 import MoodSelector from "../container/Discover/MoodSelector"
 import SongCard from "../container/Discover/SongCard"
+import { useFavoriteContext } from "../context/FavoriteContext"
 
-const MyMoodPage = ({activeMood, onMoodSelect, favorites, currentSong, onPlay, toggleFavorite, isFavorite}) => {
+const MyMoodPage = ({ activeMood, onMoodSelect }) => {
+    const { favorites } = useFavoriteContext()
+
     const filteredFavorites = favorites.filter(
-        song => song.mood === activeMood.id
+        (song) => song.mood === activeMood.id
     )
 
     return (
@@ -14,7 +17,7 @@ const MyMoodPage = ({activeMood, onMoodSelect, favorites, currentSong, onPlay, t
                     My Mood
                 </h2>
 
-                <p className="text-zinc-400 font-body mt-2 text-sm">
+                <p className="mt-2 text-sm font-body text-zinc-400">
                     Your mood history and saved playlists.
                 </p>
             </div>
@@ -26,18 +29,17 @@ const MyMoodPage = ({activeMood, onMoodSelect, favorites, currentSong, onPlay, t
             />
 
             {filteredFavorites.length === 0 ? (
-                <div className="mt-12 flex flex-col items-center justify-center text-center py-16">
-                    <span className="text-4xl mb-4">
+                <div className="mt-12 flex flex-col items-center justify-center py-16 text-center">
+                    <span className="mb-4 text-4xl">
                         🎵
                     </span>
 
-                    <h3 className="font-display text-lg font-semibold text-white mb-2">
+                    <h3 className="mb-2 font-display text-lg font-semibold text-white">
                         No saved songs yet
                     </h3>
 
-                    <p className="text-sm text-zinc-500 font-body max-w-xs">
-                        Go to Discover, pick a mood,
-                        and start saving songs you love.
+                    <p className="max-w-xs text-sm font-body text-zinc-500">
+                        Go to Discover, pick a mood, and start saving songs you love.
                     </p>
                 </div>
             ) : (
@@ -46,10 +48,6 @@ const MyMoodPage = ({activeMood, onMoodSelect, favorites, currentSong, onPlay, t
                         <SongCard
                             key={song.id}
                             song={song}
-                            onPlay={() => onPlay(song)}
-                            isPlaying={currentSong?.id === song.id}
-                            toggleFavorite={toggleFavorite}
-                            isFavorite={isFavorite}
                         />
                     ))}
                 </div>

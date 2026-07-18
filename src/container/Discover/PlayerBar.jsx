@@ -1,12 +1,18 @@
-import { FaPlay, FaPause, FaStepBackward, FaStepForward, FaRandom, FaRedo, FaVolumeUp,FaHeart } from "react-icons/fa"
+import { FaPlay, FaPause, FaStepBackward, FaStepForward, FaRandom, FaRedo, FaVolumeUp, FaHeart } from "react-icons/fa"
+import { usePlayer } from "../../context/PlayerContext"
+import { useFavoriteContext } from "../../context/FavoriteContext"
 import { useAudioPlayer } from "../../hooks/useAudioPlayer"
 import { formatTime } from "../../utils/formatTime"
 
-const PlayerBar = ({ currentSong, onClose, toggleFavorite, isFavorite, sidebarOpen }) => {
+const PlayerBar = ({ onClose, sidebarOpen }) => {
+    const { currentSong } = usePlayer()
+    const { toggleFavorite, isFavorite } = useFavoriteContext()
+
     const liked = currentSong
-        ? isFavorite(currentSong.Id)
+        ? isFavorite(currentSong.id)
         : false
-    const {audioRef, isPlaying, currentTime, duration, volume, progress, setVolume, setCurrentTime, setDuration, setIsPlaying, togglePlay, handleSeek} = useAudioPlayer(currentSong)
+
+    const { audioRef, isPlaying, currentTime, duration, volume, progress, setVolume, setCurrentTime, setDuration, setIsPlaying, togglePlay, handleSeek } = useAudioPlayer()
 
     if (!currentSong) return null
 
@@ -47,23 +53,13 @@ const PlayerBar = ({ currentSong, onClose, toggleFavorite, isFavorite, sidebarOp
                         </div>
 
                         <div className="flex items-center gap-4 lg:hidden">
-
                             <button
-                                onClick={() => toggleFavorite({
-                                        id: currentSong.trackId,
-                                        title: currentSong.trackName,
-                                        artist: currentSong.artistName,
-                                        album: currentSong.collectionName,
-                                        artwork: currentSong.artworkUrl100,
-                                        duration: currentSong.trackTimeMillis,
-                                    })
-                                }
-                                className={`text-xl transition-all duration-200
-                                    ${liked
+                                onClick={() => toggleFavorite(currentSong)}
+                                className={`text-xl transition-all duration-200 ${
+                                    liked
                                         ? "text-red-500 scale-110"
                                         : "text-zinc-400"
-                                    }
-                                `}
+                                }`}
                             >
                                 <FaHeart />
                             </button>
@@ -77,12 +73,10 @@ const PlayerBar = ({ currentSong, onClose, toggleFavorite, isFavorite, sidebarOp
                                     : <FaPlay className="ml-0.5" />
                                 }
                             </button>
-
                         </div>
 
                         <div className="absolute left-0 bottom-0 w-full lg:hidden">
                             <div className="relative h-[2px] bg-white/10 overflow-hidden">
-
                                 <div
                                     className="absolute left-0 top-0 h-full bg-[#6ee7c8]"
                                     style={{ width: `${progress}%` }}
@@ -111,7 +105,7 @@ const PlayerBar = ({ currentSong, onClose, toggleFavorite, isFavorite, sidebarOp
 
                                 <button
                                     onClick={togglePlay}
-                                    className="w-16 h-16 rounded-full bg-[#6ee7c8] text-black flex items-center justify-center"
+                                    className="flex h-16 w-16 items-center justify-center rounded-full bg-[#6ee7c8] text-black"
                                 >
                                     {isPlaying
                                         ? <FaPause />
@@ -128,12 +122,12 @@ const PlayerBar = ({ currentSong, onClose, toggleFavorite, isFavorite, sidebarOp
                                 </button>
                             </div>
 
-                            <div className="flex items-center gap-4 w-full max-w-[560px]">
-                                <span className="text-xs text-zinc-400 w-10 text-right">
+                            <div className="flex w-full max-w-[560px] items-center gap-4">
+                                <span className="w-10 text-right text-xs text-zinc-400">
                                     {formatTime(currentTime)}
                                 </span>
 
-                                <div className="relative flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                                <div className="relative h-1.5 flex-1 overflow-hidden rounded-full bg-white/10">
                                     <div
                                         className="absolute left-0 top-0 h-full bg-[#6ee7c8]"
                                         style={{ width: `${progress}%` }}
@@ -145,11 +139,11 @@ const PlayerBar = ({ currentSong, onClose, toggleFavorite, isFavorite, sidebarOp
                                         max={duration || 0}
                                         value={currentTime}
                                         onChange={handleSeek}
-                                        className="absolute inset-0 w-full opacity-0 cursor-pointer"
+                                        className="absolute inset-0 w-full cursor-pointer opacity-0"
                                     />
                                 </div>
 
-                                <span className="text-xs text-zinc-400 w-10">
+                                <span className="w-10 text-xs text-zinc-400">
                                     {formatTime(duration)}
                                 </span>
                             </div>
@@ -164,15 +158,13 @@ const PlayerBar = ({ currentSong, onClose, toggleFavorite, isFavorite, sidebarOp
                                 max={1}
                                 step={0.01}
                                 value={volume}
-                                onChange={(e) =>
-                                    setVolume(Number(e.target.value))
-                                }
+                                onChange={(e) => setVolume(Number(e.target.value))}
                                 className="w-28 accent-[#6ee7c8]"
                             />
 
                             <button
                                 onClick={onClose}
-                                className="text-zinc-500 hover:text-white text-xl transition"
+                                className="text-xl text-zinc-500 transition hover:text-white"
                             >
                                 ×
                             </button>

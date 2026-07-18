@@ -1,17 +1,20 @@
-import {useNavigate,useParams} from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
+
 import PlaylistDetail from "../container/Playlists/PlaylistDetail"
-import usePlaylist from "../hooks/usePlaylist"
 
-const PlaylistDetailPage = ({currentSong, onPlay, toggleFavorite, isFavorite}) => {
+import { usePlaylistContext } from "../context/PlaylistContext"
 
-    const {id} = useParams()
+const PlaylistDetailPage = () => {
+    const { id } = useParams()
     const navigate = useNavigate()
-    const {getPlaylistById} = usePlaylist()
+    const { getPlaylistById } = usePlaylistContext()
     const playlist = getPlaylistById(id)
-    const handleBack = () => {navigate("/playlists")}
+    const handleBack = () => {
+        navigate("/playlists")
+    }
 
-    if(!playlist){
-        return(
+    if (!playlist) {
+        return (
             <section className="mx-auto flex min-h-[60vh] w-full max-w-7xl flex-col items-center justify-center gap-6 px-10">
                 <h1 className="text-3xl font-bold text-white">
                     Playlist Not Found
@@ -31,17 +34,12 @@ const PlaylistDetailPage = ({currentSong, onPlay, toggleFavorite, isFavorite}) =
         )
     }
 
-    return(
+    return (
         <PlaylistDetail
             playlist={playlist}
-            currentSong={currentSong}
-            onPlay={onPlay}
-            toggleFavorite={toggleFavorite}
-            isFavorite={isFavorite}
             onBack={handleBack}
         />
     )
-
 }
 
 export default PlaylistDetailPage

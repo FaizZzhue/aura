@@ -1,36 +1,34 @@
-import { useState, useEffect, useRef } from "react"
+import { useEffect } from "react"
+import { usePlayer } from "../context/PlayerContext"
 
-export const useAudioPlayer = (currentSong) => {
-    const audioRef = useRef(null)
-    const [isPlaying, setIsPlaying] = useState(false)
-    const [currentTime, setCurrentTime] = useState(0)
-    const [duration, setDuration] = useState(0)
-    const [volume, setVolume] = useState(1)
+export const useAudioPlayer = () => {
+
+    const {audioRef, currentSong, isPlaying, setIsPlaying, currentTime, setCurrentTime, duration, setDuration, volume, setVolume} = usePlayer()
 
     useEffect(() => {
         if (!currentSong) return
 
         const audio = audioRef.current
+
         if (!audio) return
 
         audio.src = currentSong.previewUrl
         audio.load()
-
         audio.play()
             .then(() => setIsPlaying(true))
             .catch(() => setIsPlaying(false))
     }, [currentSong])
 
     useEffect(() => {
-        if (audioRef.current) {
-            audioRef.current.volume = volume
-        }
+        if (!audioRef.current) return
+
+        audioRef.current.volume = volume
     }, [volume])
 
     const togglePlay = () => {
         const audio = audioRef.current
-        if (!audio) return
 
+        if (!audio) return
         if (isPlaying) {
             audio.pause()
             setIsPlaying(false)
@@ -53,21 +51,6 @@ export const useAudioPlayer = (currentSong) => {
         ? (currentTime / duration) * 100
         : 0
 
-    return {
-        audioRef,
+    return {audioRef, currentSong, isPlaying, currentTime, duration, volume, progress, setVolume, setCurrentTime, setDuration, setIsPlaying, togglePlay, handleSeek}
 
-        isPlaying,
-        currentTime,
-        duration,
-        volume,
-        progress,
-
-        setVolume,
-        setCurrentTime,
-        setDuration,
-        setIsPlaying,
-
-        togglePlay,
-        handleSeek,
-    }
 }
