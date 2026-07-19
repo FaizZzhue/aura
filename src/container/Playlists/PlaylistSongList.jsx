@@ -18,14 +18,16 @@ const PlaylistSongList = ({ playlist }) => {
 
     return (
         <div className="space-y-3">
-            {playlist.songs.map((song) => (
+            {playlist.songs.map(song => (
                 <SongCard
                     key={song.id}
                     song={song}
+                    songs={playlist.songs}
                 />
             ))}
         </div>
     )
+
 }
 
 export default PlaylistSongList

@@ -1,12 +1,12 @@
 import { FaPlay, FaPause, FaHeart, FaPlus } from "react-icons/fa"
 import { useState } from "react"
-
 import { useSongCard } from "../../hooks/useSongCard"
 import { usePlayer } from "../../context/PlayerContext"
 import { useFavoriteContext } from "../../context/FavoriteContext"
 import { usePlaylistContext } from "../../context/PlaylistContext"
 
-const SongCard = ({ song }) => {
+const SongCard = ({ song, songs = [] }) => {
+
     const { id, title, artist, album, artwork, duration } = song
     const { isHover, setIsHover, formatDuration } = useSongCard(song)
     const { currentSong, playSong } = usePlayer()
@@ -15,6 +15,14 @@ const SongCard = ({ song }) => {
     const liked = isFavorite(id)
     const isPlaying = currentSong?.id === id
     const [showPlaylist, setShowPlaylist] = useState(false)
+    const handlePlay = () => {playSong(
+            song,
+            songs.length 
+                ? songs 
+                : [song]
+        )
+
+    }
 
     const handleAddToPlaylist = (playlistId) => {
         addSongToPlaylist(playlistId, song)
@@ -23,7 +31,7 @@ const SongCard = ({ song }) => {
 
     return (
         <div
-            onClick={() => playSong(song)}
+            onClick={handlePlay}
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => {
                 setIsHover(false)
@@ -39,6 +47,7 @@ const SongCard = ({ song }) => {
                     : "hover:border-[#00d4aa]/30"
             }`}
         >
+
             <div className="relative w-12 h-12 lg:w-14 lg:h-14 shrink-0">
                 <img
                     src={artwork?.replace("150x150", "180x180")}
@@ -74,7 +83,7 @@ const SongCard = ({ song }) => {
                 <button
                     onClick={(e) => {
                         e.stopPropagation()
-                        setShowPlaylist((prev) => !prev)
+                        setShowPlaylist(prev => !prev)
                     }}
                     className="opacity-0 group-hover:opacity-100 transition text-zinc-400 hover:text-[#00d4aa]"
                 >
@@ -100,12 +109,13 @@ const SongCard = ({ song }) => {
                         onClick={(e) => e.stopPropagation()}
                         className="absolute right-0 top-full z-50 mt-3 w-64 overflow-hidden rounded-2xl border border-white/10 bg-[#111827] p-2 shadow-2xl"
                     >
-                        {playlists.length === 0 ? (
+                        {playlists.length === 0 
+                        ? (
                             <p className="px-3 py-2 text-sm text-zinc-500">
                                 No playlist found
                             </p>
                         ) : (
-                            playlists.map((playlist) => (
+                            playlists.map(playlist => (
                                 <button
                                     key={playlist.id}
                                     onClick={() => handleAddToPlaylist(playlist.id)}
@@ -130,6 +140,7 @@ const SongCard = ({ song }) => {
             </span>
         </div>
     )
+
 }
 
 export default SongCard

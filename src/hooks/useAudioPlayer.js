@@ -3,7 +3,7 @@ import { usePlayer } from "../context/PlayerContext"
 
 export const useAudioPlayer = () => {
 
-    const {audioRef, currentSong, isPlaying, setIsPlaying, currentTime, setCurrentTime, duration, setDuration, volume, setVolume} = usePlayer()
+    const {audioRef, currentSong, isPlaying, setIsPlaying, currentTime, setCurrentTime, duration, setDuration, volume, setVolume, nextSong, repeat} = usePlayer()
 
     useEffect(() => {
         if (!currentSong) return
@@ -47,10 +47,19 @@ export const useAudioPlayer = () => {
         setCurrentTime(value)
     }
 
+    const handleEnded = () => {
+        if (repeat === "one") {
+            audioRef.current.currentTime = 0
+            audioRef.current.play()
+            return
+        }
+        nextSong()
+    }
+
     const progress = duration
         ? (currentTime / duration) * 100
         : 0
 
-    return {audioRef, currentSong, isPlaying, currentTime, duration, volume, progress, setVolume, setCurrentTime, setDuration, setIsPlaying, togglePlay, handleSeek}
+    return {audioRef, currentSong, isPlaying, currentTime, duration, volume, progress, setVolume, setCurrentTime, setDuration, setIsPlaying, togglePlay, handleSeek, handleEnded}
 
 }
