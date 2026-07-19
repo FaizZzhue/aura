@@ -4,11 +4,11 @@ import usePlaylist from "../hooks/usePlaylist"
 const PlaylistContext = createContext(null)
 
 export const PlaylistProvider = ({ children }) => {
-    const {playlists, createPlaylist, renamePlaylist, deletePlaylist, addSongToPlaylist, removeSongFromPlaylist, getPlaylistById} = usePlaylist()
+    const {playlists, createPlaylist, renamePlaylist, updatePlaylistCover, deletePlaylist, addSongToPlaylist, removeSongFromPlaylist, getPlaylistById} = usePlaylist()
 
     const value = useMemo(() => (
-        {playlists, createPlaylist, renamePlaylist, deletePlaylist, addSongToPlaylist, removeSongFromPlaylist, getPlaylistById}
-    ), [playlists])
+        {playlists, createPlaylist, renamePlaylist, updatePlaylistCover, deletePlaylist, addSongToPlaylist, removeSongFromPlaylist, getPlaylistById}
+    ), [playlists, createPlaylist, renamePlaylist, updatePlaylistCover, deletePlaylist, addSongToPlaylist, removeSongFromPlaylist, getPlaylistById])
 
     return (
         <PlaylistContext.Provider value={value}>
