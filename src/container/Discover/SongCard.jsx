@@ -8,15 +8,12 @@ import { usePlaylistContext } from "../../context/PlaylistContext"
 
 const SongCard = ({ song }) => {
     const { id, title, artist, album, artwork, duration } = song
-
     const { isHover, setIsHover, formatDuration } = useSongCard(song)
     const { currentSong, playSong } = usePlayer()
     const { toggleFavorite, isFavorite } = useFavoriteContext()
     const { playlists, addSongToPlaylist } = usePlaylistContext()
-
     const liked = isFavorite(id)
     const isPlaying = currentSong?.id === id
-
     const [showPlaylist, setShowPlaylist] = useState(false)
 
     const handleAddToPlaylist = (playlistId) => {

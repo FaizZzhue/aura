@@ -1,15 +1,14 @@
-import {useEffect,useState} from "react"
+import { useEffect, useState } from "react"
 
-const STORAGE_KEY="playlists"
+const STORAGE_KEY = "playlists"
 
 const usePlaylist = () => {
 
-    const [playlists,setPlaylists] = useState(() => {
-        const saved=localStorage.getItem(STORAGE_KEY)
+    const [playlists, setPlaylists] = useState(() => {
+        const saved = localStorage.getItem(STORAGE_KEY)
         return saved
-            ?JSON.parse(saved)
-            :[]
-
+            ? JSON.parse(saved)
+            : []
     })
 
     useEffect(() => {
@@ -17,53 +16,57 @@ const usePlaylist = () => {
             STORAGE_KEY,
             JSON.stringify(playlists)
         )
-    },[playlists])
+    }, [playlists])
 
     const createPlaylist = (name) => {
 
         const playlist = {
-            id:Date.now().toString(),
+            id: Date.now().toString(),
             name,
-            description:"",
-            cover:null,
-            songs:[],
-            createdAt:new Date().toISOString(),
-            updatedAt:new Date().toISOString()
+            description: "",
+            cover: null,
+            songs: [],
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
         }
 
-        setPlaylists((prev)=>[
+        setPlaylists((prev) => [
             ...prev,
             playlist
         ])
     }
 
-    const renamePlaylist = (playlistId,newName) => {
-        setPlaylists((prev) => prev.map((playlist) => {
+    const renamePlaylist = (playlistId, newName) => {
+        setPlaylists((prev) =>
+            prev.map((playlist) => {
 
-                if(playlist.id !== playlistId) {
+                if (playlist.id !== playlistId) {
                     return playlist
                 }
 
-                return{
+                return {
                     ...playlist,
-                    name:newName.trim(),
-                    updatedAt:new Date().toISOString()
+                    name: newName.trim(),
+                    updatedAt: new Date().toISOString()
                 }
+
             })
         )
     }
 
     const deletePlaylist = (playlistId) => {
-        setPlaylists((prev) => prev.filter(
+        setPlaylists((prev) =>
+            prev.filter(
                 (playlist) => playlist.id !== playlistId
             )
         )
     }
 
-    const addSongToPlaylist = (playlistId,song) => {
-        setPlaylists((prev) => prev.map((playlist) => {
+    const addSongToPlaylist = (playlistId, song) => {
+        setPlaylists((prev) =>
+            prev.map((playlist) => {
 
-                if(playlist.id !== playlistId) {
+                if (playlist.id !== playlistId) {
                     return playlist
                 }
 
@@ -71,35 +74,37 @@ const usePlaylist = () => {
                     (item) => item.id === song.id
                 )
 
-                if(exists){
+                if (exists) {
                     return playlist
                 }
 
-                return{
+                return {
                     ...playlist,
-                    cover:playlist.cover ?? song.artwork,
-                    songs:[
+                    cover: playlist.cover ?? song.artwork,
+                    songs: [
                         ...playlist.songs,
                         {
-                            id:song.id,
-                            title:song.title,
-                            artist:song.artist,
-                            album:song.album,
-                            artwork:song.artwork,
-                            duration:song.duration,
-                            preview:song.preview
+                            id: song.id,
+                            title: song.title,
+                            artist: song.artist,
+                            album: song.album,
+                            artwork: song.artwork,
+                            duration: song.duration,
+                            previewUrl: song.previewUrl
                         }
                     ],
-                    updatedAt:new Date().toISOString()
+                    updatedAt: new Date().toISOString()
                 }
+
             })
         )
     }
 
-    const removeSongFromPlaylist = (playlistId,songId) => {
-        setPlaylists((prev) => prev.map((playlist) => {
+    const removeSongFromPlaylist = (playlistId, songId) => {
+        setPlaylists((prev) =>
+            prev.map((playlist) => {
 
-                if(playlist.id !== playlistId) {
+                if (playlist.id !== playlistId) {
                     return playlist
                 }
 
@@ -107,17 +112,16 @@ const usePlaylist = () => {
                     (song) => song.id !== songId
                 )
 
-                return{
+                return {
                     ...playlist,
-                    cover:songs.length>0
-                        ?songs[0].artwork
-                        :null,
+                    cover: songs.length > 0
+                        ? songs[0].artwork
+                        : null,
                     songs,
-                    updatedAt:new Date().toISOString()
+                    updatedAt: new Date().toISOString()
                 }
             })
         )
-
     }
 
     const getPlaylistById = (playlistId) => {
@@ -126,7 +130,8 @@ const usePlaylist = () => {
         )
     }
 
-    return{playlists, createPlaylist, renamePlaylist, deletePlaylist, addSongToPlaylist, removeSongFromPlaylist, getPlaylistById}
+    return {playlists, createPlaylist, renamePlaylist, deletePlaylist, addSongToPlaylist, removeSongFromPlaylist, getPlaylistById}
+
 }
 
 export default usePlaylist

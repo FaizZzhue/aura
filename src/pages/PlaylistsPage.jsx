@@ -37,24 +37,26 @@ const PlaylistsPage = () => {
                     </button>
                 </div>
 
-                <div className= "mt-8">
+                <div className="mt-8">
                     <PlaylistGrid
                         playlists={playlists}
                         onPlaylistClick={handlePlaylistClick}
                     />
                 </div>
 
-                {playlists.length === 0 && (
-                    <EmptyPlaylist
-                        onCreate={() => setOpenModal(true)}
-                    />
-                )}
+                <div className="mt-8">
+                    {playlists.length === 0 && (
+                        <EmptyPlaylist
+                            onCreate={() => setOpenModal(true)}
+                        />
+                    )}
 
-                <PlaylistModal
-                    open={openModal}
-                    onClose={() => setOpenModal(false)}
-                    onSubmit={handleCreatePlaylist}
-                />
+                    <PlaylistModal
+                        open={openModal}
+                        onClose={() => setOpenModal(false)}
+                        onSubmit={handleCreatePlaylist}
+                    />
+                </div>
             </div>
         </section>
     )
